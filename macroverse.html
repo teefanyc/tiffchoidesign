@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Macroverse by Discovery Cube — Case Study</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=DM+Sans:wght@400;500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="custom-cursor" aria-hidden="true">
+  <span class="custom-cursor__label"></span>
+</div>
+
+<header class="site-nav">
+  <div class="site-nav__inner">
+    <a href="index.html#work" class="site-nav__link">Work</a>
+    <a href="index.html" class="site-nav__logo-link" aria-label="Home">
+      <img src="assets/images/logo.png" alt="tiff choi design" class="site-nav__logo">
+    </a>
+    <a href="about.html" class="site-nav__link">About</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="hero__bg" style="background-image:url('assets/images/hero-bg.png')"></div>
+    <div class="hero__content">
+      <h1 class="hero__title" data-split-text>Macroverse</h1>
+      <p class="hero__subtitle" data-split-text>by Discovery Cube</p>
+    </div>
+    <button class="hero__hotspot" type="button" aria-label="Scroll down to project content">
+      <span class="hero__hotspot-chevron" aria-hidden="true">&#8595;</span>
+    </button>
+  </section>
+
+  <div class="main-content">
+
+    <nav class="project-nav" aria-label="Project sections">
+      <a href="#top" class="project-nav__back">
+        <svg width="16" height="13" viewBox="0 0 16 13" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M1 6.5H15M1 6.5L6.5 1M1 6.5L6.5 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Back
+      </a>
+      <ul class="project-nav__list">
+        <li><a href="#overview" class="project-nav__link project-nav__link--overview">Overview</a></li>
+        <li><a href="#objectives" class="project-nav__link project-nav__link--objectives">Objectives</a></li>
+        <li><a href="#discovery" class="project-nav__link project-nav__link--discovery">Discovery</a></li>
+        <li><a href="#prototyping-testing" class="project-nav__link project-nav__link--prototyping-testing">Prototyping &amp; Testing</a></li>
+        <li><a href="#delivery" class="project-nav__link project-nav__link--delivery">Delivery</a></li>
+      </ul>
+    </nav>
+
+    <div class="content-column">
+
+      <!-- ================= OVERVIEW ================= -->
+      <section id="overview" class="section">
+        <h2 class="section__heading section__heading--overview">Overview</h2>
+
+        <div class="meta-grid">
+          <div class="meta-box">
+            <span class="meta-box__label">Roles</span>
+            <p class="meta-box__value">UX Research<br>UI Design</p>
+          </div>
+          <div class="meta-box">
+            <span class="meta-box__label">Timeline</span>
+            <p class="meta-box__value">20 weeks</p>
+          </div>
+          <div class="meta-box">
+            <span class="meta-box__label">Team</span>
+            <p class="meta-box__value">Tiffany Choi<br>Isabella Cedric<br>Sujin Kim<br>Zhi Qiu</p>
+          </div>
+          <div class="meta-box">
+            <span class="meta-box__label">Tools</span>
+            <p class="meta-box__value">Figma<br>Paper</p>
+          </div>
+        </div>
+
+        <div class="welcome-block">
+          <h3 class="welcome-block__heading reveal">Welcome to the Macroverse!</h3>
+          <p class="reveal">Currently in development at the Discovery Cube Museum, the Macroverse will be a seasonal summer exhibit where visitors get &ldquo;shrunken&rdquo; down to the size of a lizard and enter a science lab full of different challenges. With funding from Lilly Grant initiatives backing the exhibit, visitors are challenged to practice four core character traits while inside this immersive, oversized science environment:</p>
+
+          <div class="badges">
+            <button type="button" class="badge badge--curious" data-stagger-index="0" data-trait="curious">Curious</button>
+            <button type="button" class="badge badge--tenacious" data-stagger-index="1" data-trait="tenacious">Tenacious</button>
+            <button type="button" class="badge badge--collaborative" data-stagger-index="2" data-trait="collaborative">Collaborative</button>
+            <button type="button" class="badge badge--dynamic" data-stagger-index="3" data-trait="dynamic">Dynamic</button>
+          </div>
+        </div>
+
+        <figure class="rendering-frame reveal">
+          <div class="rendering-frame__panel">
+            <img src="assets/images/wordmark-macroverse.png" alt="Macroverse wordmark" class="rendering-frame__wordmark">
+            <div class="rendering-frame__image-wrap">
+              <img src="assets/images/ai-rendering.png" alt="AI rendering of the Macroverse exhibit floor plan, showing stations including Mouse Maze, Periodic Pursuit, Ant Farm, Lava Lab, Logic Loop, Molecule Match, and a Beckman Lab entrance" class="rendering-frame__image">
+
+              <button class="touchpoint-dot" type="button" data-touchpoint="exhibit-onboarding" style="--dot-x: 88%; --dot-y: 86%;" aria-label="Exhibit Onboarding — view details">
+                <span class="touchpoint-dot__pulse" aria-hidden="true"></span>
+              </button>
+              <button class="touchpoint-dot" type="button" data-touchpoint="game-checkin" style="--dot-x: 50%; --dot-y: 48%;" aria-label="Game Check-in (Lava Lab) — view details">
+                <span class="touchpoint-dot__pulse" aria-hidden="true"></span>
+              </button>
+              <button class="touchpoint-dot" type="button" data-touchpoint="game-checkin" style="--dot-x: 24%; --dot-y: 31%;" aria-label="Game Check-in (Mouse Maze) — view details">
+                <span class="touchpoint-dot__pulse" aria-hidden="true"></span>
+              </button>
+              <button class="touchpoint-dot" type="button" data-touchpoint="game-checkin" style="--dot-x: 22%; --dot-y: 72%;" aria-label="Game Check-in (Logic Loop) — view details">
+                <span class="touchpoint-dot__pulse" aria-hidden="true"></span>
+              </button>
+              <button class="touchpoint-dot" type="button" data-touchpoint="contribution-kiosks" style="--dot-x: 71%; --dot-y: 77%;" aria-label="Contribution Kiosks — view details">
+                <span class="touchpoint-dot__pulse" aria-hidden="true"></span>
+              </button>
+            </div>
+            <figcaption class="rendering-frame__caption">AI Rendering courtesy of Discovery Cube</figcaption>
+          </div>
+        </figure>
+      </section>
+
+      <!-- ================= OBJECTIVES ================= -->
+      <section id="objectives" class="section">
+        <h2 class="section__heading section__heading--objectives">Objectives</h2>
+        <p class="reveal">The Discovery Cube team had a couple of initial project goals for us:</p>
+        <div class="card-row card-row--2">
+          <div class="objective-card reveal">
+            <p class="objective-statement">Develop a clear, end-to-end storyboard for the Macroverse experience.</p>
+          </div>
+          <div class="objective-card reveal">
+            <p class="objective-statement">Define game-level interaction flows that spell out what happens before and after each game including: game check-in, how-to-play instructions, science explanation/reflection after play.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= DISCOVERY ================= -->
+      <section id="discovery" class="section">
+        <h2 class="section__heading section__heading--discovery">Discovery</h2>
+        <p class="reveal">While we had a clear project goal from our partners, we still had to figure out how we were going to achieve it. So, we put together a research plan to dive into our first course of action. Since the Macroverse will target school-aged children between 6 and 12, we set off to learn what kinds of things encourage engagement and also what helps learning &ldquo;stick&rdquo; for this group.</p>
+
+        <div class="carousel" id="discovery-carousel">
+          <div class="carousel-track">
+            <div class="carousel-slide"><img src="assets/images/research-activities-1.png" alt="Research activity 1"></div>
+            <div class="carousel-slide"><img src="assets/images/research-activities-2.png" alt="Research activity 2"></div>
+            <div class="carousel-slide"><img src="assets/images/research-activities-3.png" alt="Research activity 3"></div>
+            <div class="carousel-slide"><img src="assets/images/research-activities-4.png" alt="Research activity 4"></div>
+          </div>
+          <button class="carousel-arrow carousel-arrow--prev" type="button" aria-label="Previous slide">&#8249;</button>
+          <button class="carousel-arrow carousel-arrow--next" type="button" aria-label="Next slide">&#8250;</button>
+          <div class="carousel-dots"></div>
+        </div>
+
+        <div class="sub-block">
+          <h3 class="sub-block__heading reveal">Insights</h3>
+
+          <div class="insight-row reveal">
+            <div class="insight-row__text">
+              <span class="eyebrow-label eyebrow-label--pill">Engagement</span>
+              <p class="insight-row__statement">Engagement thrives when challenges are reframed to feel achievable and failure is treated as part of the learning process rather than a competitive loss.</p>
+            </div>
+          </div>
+
+          <div class="insight-row insight-row--reverse reveal">
+            <div class="insight-row__text">
+              <span class="eyebrow-label eyebrow-label--pill">Motivation</span>
+              <p class="insight-row__statement">Students tend to care more when they feel ownership over the outcomes and peer collaboration helps to build that independence.</p>
+            </div>
+          </div>
+
+          <div class="insight-row reveal">
+            <div class="insight-row__text">
+              <span class="eyebrow-label eyebrow-label--pill">Environmental/Social Factors</span>
+              <p class="insight-row__statement">A safe, flexible environment builds students&rsquo; confidence and quick interactive activities help capture their attention.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="sub-block discovery-objective-wrap">
+          <h3 class="sub-block__heading reveal">Objective</h3>
+          <p class="objective-statement reveal"><span class="eyebrow-label eyebrow-label--pill">How might we</span> create a more cohesive experience that clearly connects gameplay to the Macroverse&rsquo;s character-building mission?</p>
+        </div>
+      </section>
+
+      <!-- ================= PROTOTYPING & TESTING ================= -->
+      <section id="prototyping-testing" class="section">
+        <h2 class="section__heading section__heading--prototyping-testing">Prototyping &amp; Testing</h2>
+        <p class="reveal">After receiving their RFPs back from vendors, our Discovery Cube partners ran into some obstacles that changed the trajectory of our designs. With a newly strategized budget, combined with our research and their own user testing, the Discovery Cube team decided to pivot, consolidating and reframing the original touchpoints.</p>
+        <p class="reveal"><strong>Our new flows:</strong></p>
+        <div class="flow-pills reveal">
+          <span class="flow-pill">I. Exhibit Onboarding</span>
+          <span class="flow-pill">II. Game Check-in</span>
+          <span class="flow-pill">III. Character Point Kiosk</span>
+        </div>
+
+        <div class="sub-block">
+          <h3 class="sub-block__heading reveal">Testing</h3>
+          <div class="card-row card-row--3">
+            <div class="method-card reveal">
+              <img src="assets/images/testing-ab.png" alt="A/B Testing illustration">
+              <span>A/B Testing</span>
+            </div>
+            <div class="method-card reveal">
+              <img src="assets/images/testing-prototype.png" alt="Prototype Simulation illustration">
+              <span>Prototype Simulation</span>
+            </div>
+            <div class="method-card reveal">
+              <img src="assets/images/testing-survey.png" alt="Post-test Surveys illustration">
+              <span>Post-test Surveys</span>
+            </div>
+          </div>
+        </div>
+
+        <p class="reveal">Discovery Cube was gracious enough to allow us to use their facilities. This gave us access to a conference room large enough to simulate a mock Macroverse as well as the museum visitors who were willing to help us out.</p>
+
+        <div class="carousel" id="prototyping-carousel">
+          <div class="carousel-track">
+            <div class="carousel-slide">
+              <img src="assets/images/session-1.jpg" alt="Session 1">
+            </div>
+            <div class="carousel-slide">
+              <img src="assets/images/session-2.jpg" alt="Session 2">
+            </div>
+            <div class="carousel-slide">
+              <img src="assets/images/key-takeaways.jpg" alt="Key Takeaways">
+            </div>
+          </div>
+          <button class="carousel-arrow carousel-arrow--prev" type="button" aria-label="Previous slide">&#8249;</button>
+          <button class="carousel-arrow carousel-arrow--next" type="button" aria-label="Next slide">&#8250;</button>
+          <div class="carousel-dots"></div>
+        </div>
+
+        <div class="sub-block">
+          <h3 class="sub-block__heading reveal">High Fidelity Prototype</h3>
+          <p class="reveal">Based on the results from A/B testing, we consolidated into one, main flow.</p>
+          <div class="hifi-image-row reveal">
+            <img src="assets/images/hifi-image1.png" alt="High fidelity prototype screen one" class="hifi-image-row__image">
+            <img src="assets/images/hifi-image2.png" alt="High fidelity prototype screen two" class="hifi-image-row__image">
+          </div>
+        </div>
+
+        <div class="sub-block">
+          <h3 class="sub-block__heading reveal">Key Considerations</h3>
+
+          <div class="consideration-row reveal">
+            <img src="assets/images/considerations-onboarding.png" alt="Exhibit Onboarding consideration" class="consideration-row__image">
+            <div class="consideration-row__text">
+              <h4 class="consideration-card__title consideration-card__title--pill">Exhibit Onboarding</h4>
+              <ul class="consideration-card__list">
+                <li>Solo vs. group onboarding &mdash; keep because friction makes parents more likely to get involved</li>
+                <li>Test out CTAs to see which are most clear to target age</li>
+              </ul>
+            </div>
+          </div>
+          <div class="consideration-row reveal">
+            <img src="assets/images/considerations-checkin.png" alt="Game Check-in consideration" class="consideration-row__image">
+            <div class="consideration-row__text">
+              <h4 class="consideration-card__title consideration-card__title--pill">Game Check-in</h4>
+              <ul class="consideration-card__list">
+                <li>Clickable elements need to be CLEARLY clickable via appearance, animation helps</li>
+                <li>Once kids find out they can do something, they know to look for it in next instance</li>
+                <li>CTAs also need revisiting/testing</li>
+              </ul>
+            </div>
+          </div>
+          <div class="consideration-row reveal">
+            <img src="assets/images/considerations-contribution.png" alt="Contribution Kiosk consideration" class="consideration-row__image">
+            <div class="consideration-row__text">
+              <h4 class="consideration-card__title consideration-card__title--pill">Contribution Kiosk</h4>
+              <ul class="consideration-card__list">
+                <li>Insert micro-interactions to bring more attention to character trait point collection</li>
+                <li>Use physical environment to draw attention to these kiosks</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= DELIVERY ================= -->
+      <section id="delivery" class="section">
+        <h2 class="section__heading section__heading--delivery">Delivery</h2>
+        <p class="reveal">Since the Macroverse will not be opening at Discovery Cube until Summer of 2027, we wanted to provide a deliverable that was a bit more dynamic than just a bunch of UI screens. With all of the research we gathered to inform our design decisions, we decided to create an &ldquo;interactive design system&rdquo; for our partners. This design system would outline the insights we drew from our data and show our rationale/logic for things like the specific words we chose or the placement of certain components.</p>
+        <p class="reveal">There is a lot of time between now and next summer, which means there is plenty of opportunity for change and more unexpected pivots. This guide could act as a foundational starting point that the future designer can use and update as they see appropriate. For further ease of use, we broke the design system into two parts: a visual style guide and an annotated guide. One is more documentation-focused while the other is a more visual representation of our rationale specific to the screens we designed and tested with.</p>
+        <div class="card-row card-row--2">
+          <div class="delivery-column reveal">
+            <img src="assets/images/delivery-visualstyleguide-thumb.png" alt="Visual Style Guide thumbnail" class="delivery-column__image">
+          </div>
+          <div class="delivery-column reveal">
+            <img src="assets/images/delivery-annotatedguide-thumb.png" alt="Annotated Guide thumbnail" class="delivery-column__image">
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <section class="more-work">
+    <div class="more-work__inner">
+      <h2 class="section__heading">More Work</h2>
+      <div class="card-row card-row--4">
+        <div class="more-work__placeholder-box" aria-hidden="true">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 9.5C4 8.12 5.12 7 6.5 7H10.5L12 4.5H20L21.5 7H25.5C26.88 7 28 8.12 28 9.5V24.5C28 25.88 26.88 27 25.5 27H6.5C5.12 27 4 25.88 4 24.5V9.5Z" stroke="white" stroke-width="1.6" stroke-linejoin="round"/><circle cx="16" cy="17" r="5" stroke="white" stroke-width="1.6"/></svg>
+        </div>
+        <div class="more-work__placeholder-box" aria-hidden="true">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 9.5C4 8.12 5.12 7 6.5 7H10.5L12 4.5H20L21.5 7H25.5C26.88 7 28 8.12 28 9.5V24.5C28 25.88 26.88 27 25.5 27H6.5C5.12 27 4 25.88 4 24.5V9.5Z" stroke="white" stroke-width="1.6" stroke-linejoin="round"/><circle cx="16" cy="17" r="5" stroke="white" stroke-width="1.6"/></svg>
+        </div>
+        <div class="more-work__placeholder-box" aria-hidden="true">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 9.5C4 8.12 5.12 7 6.5 7H10.5L12 4.5H20L21.5 7H25.5C26.88 7 28 8.12 28 9.5V24.5C28 25.88 26.88 27 25.5 27H6.5C5.12 27 4 25.88 4 24.5V9.5Z" stroke="white" stroke-width="1.6" stroke-linejoin="round"/><circle cx="16" cy="17" r="5" stroke="white" stroke-width="1.6"/></svg>
+        </div>
+        <div class="more-work__placeholder-box" aria-hidden="true">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 9.5C4 8.12 5.12 7 6.5 7H10.5L12 4.5H20L21.5 7H25.5C26.88 7 28 8.12 28 9.5V24.5C28 25.88 26.88 27 25.5 27H6.5C5.12 27 4 25.88 4 24.5V9.5Z" stroke="white" stroke-width="1.6" stroke-linejoin="round"/><circle cx="16" cy="17" r="5" stroke="white" stroke-width="1.6"/></svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="site-footer__top">
+    <img src="assets/images/logo.png" alt="" class="site-footer__image">
+    <p class="site-footer__tagline">Meet you at the intersection <br/>of Design &amp; Identity.</p>
+  </div>
+  <div class="site-footer__bottom">
+    <span class="site-footer__name">tiff choi design</span>
+    <a href="#" class="site-footer__connect">Connect</a>
+  </div>
+</footer>
+
+<button class="back-to-top" type="button" aria-label="Back to top">
+  <img src="assets/icons/arrow-up.svg" alt="" aria-hidden="true">
+</button>
+
+<div class="tooltip" role="tooltip">
+  <p class="tooltip__text"></p>
+  <div class="tooltip__arrow" aria-hidden="true"></div>
+</div>
+
+<script src="script.js" defer></script>
+</body>
+</html>
