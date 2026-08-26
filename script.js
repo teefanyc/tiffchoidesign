@@ -15,7 +15,7 @@
 
   function navHeightPx() {
     var value = getComputedStyle(document.documentElement).getPropertyValue("--nav-height");
-    return parseInt(value, 10) || 104;
+    return parseInt(value, 10) || 84;
   }
 
   // ---------------------------------------------------------------
@@ -85,8 +85,14 @@
     cursorController.setHotspot = function (isOn) {
       cursorEl.classList.toggle("is-hotspot", isOn);
     };
-    cursorController.setLabel = function (text) {
-      labelEl.textContent = text || "";
+    cursorController.setLabel = function (text, iconSvg) {
+      if (iconSvg) {
+        labelEl.innerHTML = iconSvg + "<span>" + text + "</span>";
+        labelEl.classList.add("has-icon");
+      } else {
+        labelEl.textContent = text || "";
+        labelEl.classList.remove("has-icon");
+      }
     };
     cursorController.setLight = function (isOn) {
       cursorEl.classList.toggle("is-light", isOn);
@@ -329,7 +335,7 @@
           setTimeout(function () {
             cursor2.classList.remove("is-active");
             cursor2.classList.add("is-hidden");
-          }, BLINK_MS * 2);
+          }, BLINK_MS * 4);
         });
       }, BLINK_MS * 1.5);
     });
@@ -355,11 +361,17 @@
   // Home work tile hover -> cursor reads "View" (linked tile only)
   // ---------------------------------------------------------------
   function initWorkTileCursor() {
+    var EYE_ICON =
+      '<svg class="custom-cursor__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
+      '<path d="M1 12C1 12 5 4 12 4C19 4 23 12 23 12C23 12 19 20 12 20C5 20 1 12 1 12Z" stroke="currentColor" stroke-width="2"/>' +
+      '<circle cx="12" cy="12" r="3.5" stroke="currentColor" stroke-width="2"/>' +
+      "</svg>";
+
     var links = document.querySelectorAll(".home-work__tile--link");
     links.forEach(function (link) {
       link.addEventListener("mouseenter", function () {
         cursorController.setHotspot(true);
-        cursorController.setLabel("View");
+        cursorController.setLabel("View Project", EYE_ICON);
       });
       link.addEventListener("mouseleave", function () {
         cursorController.setHotspot(false);
