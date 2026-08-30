@@ -1075,10 +1075,19 @@ p { color: var(--gray-body); font-size: 17px; margin: 0 0 20px; }
   right: 0;
   top: -25%;
   bottom: -25%;
-  background-image: url('assets/images/gridpaper-bg-2150x1400.png');
-  background-size: cover;
-  background-position: center;
+  background-image: url('assets/images/gridpaper-pattern.jpg');
+  background-repeat: repeat;
+  background-size: 340px auto;
   will-change: transform;
+}
+
+.delight__dog {
+  position: absolute;
+  bottom: 0;
+  left: 79%;
+  transform: translateX(-50%);
+  width: 370px;
+  height: auto;
 }
 
 .delight__vignette {
@@ -1393,6 +1402,9 @@ p { color: var(--gray-body); font-size: 17px; margin: 0 0 20px; }
    RESPONSIVE — Mobile (<768px)
    ============================================================ */
 @media (max-width: 767px) {
+  .delight__bg { background-size: 200px auto; }
+  .delight__dog { width: 220px; }
+
   .site-nav__inner { gap: 32px; }
   .site-nav__logo { width: 130px; }
   .site-nav__link { font-size: 14px; }
