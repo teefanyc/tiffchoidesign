@@ -5,6 +5,16 @@
   var REVEAL_MARGIN = "0px 0px -10% 0px";
   var isFinePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 
+  var RIGHT_ARROW_ICON =
+    '<svg class="custom-cursor__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
+    '<path d="M3 12H21M21 12L14 5M21 12L14 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>' +
+    "</svg>";
+
+  var HOME_ICON =
+    '<svg class="custom-cursor__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
+    '<path d="M4 11L12 4L20 11V20C20 20.55 19.55 21 19 21H15V15H9V21H5C4.45 21 4 20.55 4 20V11Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>' +
+    "</svg>";
+
   var heroEl = document.querySelector(".hero");
   var mainContentEl = document.querySelector(".main-content");
   var siteNavEl = document.querySelector(".site-nav");
@@ -87,11 +97,9 @@
     };
     cursorController.setLabel = function (text, iconSvg) {
       if (iconSvg) {
-        labelEl.innerHTML = iconSvg + "<span>" + text + "</span>";
-        labelEl.classList.add("has-icon");
+        labelEl.innerHTML = iconSvg + (text ? "<span>" + text + "</span>" : "");
       } else {
         labelEl.textContent = text || "";
-        labelEl.classList.remove("has-icon");
       }
     };
     cursorController.setLight = function (isOn) {
@@ -118,6 +126,26 @@
     registerScrollHandler(function (y) {
       if (y > heroHeight()) return;
       bgEl.style.transform = "translateY(" + y * 0.35 + "px)";
+    });
+  }
+
+  // ---------------------------------------------------------------
+  // Elements of Delight parallax: dog sketch reveals as section scrolls by
+  // ---------------------------------------------------------------
+  function initDelightParallax() {
+    var section = document.querySelector(".delight");
+    var bg = document.querySelector(".delight__bg");
+    if (!section || !bg) return;
+
+    registerScrollHandler(function () {
+      var rect = section.getBoundingClientRect();
+      var vh = window.innerHeight;
+      // progress reaches 1 exactly when the section is vertically centered in the viewport
+      var progress = (2 * (vh - rect.top)) / (vh + rect.height);
+      progress = Math.max(0, Math.min(1, progress));
+      var maxShift = rect.height * 0.25;
+      var shift = maxShift - progress * (maxShift * 2);
+      bg.style.transform = "translateY(" + shift + "px)";
     });
   }
 
@@ -155,6 +183,32 @@
   }
 
   // ---------------------------------------------------------------
+  // Letter-by-letter reveal, triggered on scroll-into-view
+  // ---------------------------------------------------------------
+  function initSplitOnScrollReveal() {
+    var els = document.querySelectorAll("[data-split-reveal]");
+    if (!els.length) return;
+
+    if (!("IntersectionObserver" in window)) {
+      els.forEach(function (el) { splitTextToSpans(el, 0, 20); });
+      return;
+    }
+
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          splitTextToSpans(entry.target, 0, 20);
+          observer.unobserve(entry.target);
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    els.forEach(function (el) { observer.observe(el); });
+  }
+
+  // ---------------------------------------------------------------
   // Hero bottom-center hotspot -> cursor morph + smooth scroll
   // ---------------------------------------------------------------
   function initHeroHotspotScroll() {
@@ -185,7 +239,7 @@
     links.forEach(function (link) {
       link.addEventListener("mouseenter", function () {
         cursorController.setHotspot(true);
-        cursorController.setLabel("Go To");
+        cursorController.setLabel("Go To", RIGHT_ARROW_ICON);
       });
       link.addEventListener("mouseleave", function () {
         cursorController.setHotspot(false);
@@ -197,7 +251,7 @@
     if (logoLink) {
       logoLink.addEventListener("mouseenter", function () {
         cursorController.setHotspot(true);
-        cursorController.setLabel("Home");
+        cursorController.setLabel("Home", HOME_ICON);
       });
       logoLink.addEventListener("mouseleave", function () {
         cursorController.setHotspot(false);
@@ -349,7 +403,7 @@
     if (!cta) return;
     cta.addEventListener("mouseenter", function () {
       cursorController.setHotspot(true);
-      cursorController.setLabel("→");
+      cursorController.setLabel("", RIGHT_ARROW_ICON);
     });
     cta.addEventListener("mouseleave", function () {
       cursorController.setHotspot(false);
@@ -776,7 +830,9 @@
     initCustomCursor();
     initNavScrollState();
     initHeroParallax();
+    initDelightParallax();
     initHeroLetterAnimation();
+    initSplitOnScrollReveal();
     initScrollReveal();
     initProjectNavActiveLink();
     initSiteNavCursor();
