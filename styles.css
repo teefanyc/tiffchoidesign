@@ -1077,7 +1077,7 @@ p { color: var(--gray-body); font-size: 17px; margin: 0 0 20px; }
   bottom: -25%;
   background-image: url('assets/images/gridpaper-pattern.jpg');
   background-repeat: repeat;
-  background-size: 340px auto;
+  background-size: 400px auto;
   will-change: transform;
 }
 
