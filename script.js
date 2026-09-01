@@ -5,6 +5,37 @@
   var REVEAL_MARGIN = "0px 0px -10% 0px";
   var isFinePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 
+  // Single source of truth for each project's thumbnail. Any tile marked
+  // with data-project="<key>" (Home's work grid, every case study's "More
+  // Work" grid) gets its image/label/link filled in from here, so updating
+  // a thumbnail in one place updates it everywhere it's featured.
+  var PROJECTS = {
+    macroverse: {
+      href: "macroverse.html",
+      thumb: "assets/images/work-macroverse.jpg",
+      thumbHover: "assets/images/work-macroverse-hover.jpg",
+      name: "Macroverse",
+    },
+    costco: {
+      href: "costco.html",
+      thumb: "assets/images/work-costco.jpg",
+      thumbHover: "assets/images/work-costco-hover.jpg",
+      name: "Costco Auto Program",
+    },
+    "breakfast-republic": {
+      href: "breakfast-republic.html",
+      thumb: "assets/images/work-breakfast-republic.jpg",
+      thumbHover: "assets/images/work-breakfast-republic-hover.jpg",
+      name: "Breakfast Republic",
+    },
+    "como-ceviche": {
+      href: "como-ceviche.html",
+      thumb: "assets/images/work-como-ceviche.jpg",
+      thumbHover: "assets/images/work-como-ceviche-hover.jpg",
+      name: "¡Como Ceviche!",
+    },
+  };
+
   var RIGHT_ARROW_ICON =
     '<svg class="custom-cursor__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
     '<path d="M3 12H21M21 12L14 5M21 12L14 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>' +
@@ -13,6 +44,16 @@
   var HOME_ICON =
     '<svg class="custom-cursor__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
     '<path d="M4 11L12 4L20 11V20C20 20.55 19.55 21 19 21H15V15H9V21H5C4.45 21 4 20.55 4 20V11Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>' +
+    "</svg>";
+
+  var PLUS_ICON =
+    '<svg class="custom-cursor__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
+    '<path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>' +
+    "</svg>";
+
+  var MINUS_ICON =
+    '<svg class="custom-cursor__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
+    '<path d="M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>' +
     "</svg>";
 
   var heroEl = document.querySelector(".hero");
@@ -159,7 +200,7 @@
     chars.forEach(function (ch, i) {
       var span = document.createElement("span");
       span.className = "char" + (ch === " " ? " char--space" : "");
-      span.textContent = ch === " " ? " " : ch;
+      span.textContent = ch;
       span.style.animationDelay = baseDelay + i * perCharDelay + "ms";
       el.appendChild(span);
     });
@@ -414,6 +455,38 @@
   // ---------------------------------------------------------------
   // Home work tile hover -> cursor reads "View" (linked tile only)
   // ---------------------------------------------------------------
+  // ---------------------------------------------------------------
+  // Fill in project tiles (Home work grid, every "More Work" grid)
+  // from the shared PROJECTS registry above.
+  // ---------------------------------------------------------------
+  function initProjectThumbnails() {
+    var slots = document.querySelectorAll("[data-project]");
+    slots.forEach(function (slot) {
+      var project = PROJECTS[slot.getAttribute("data-project")];
+      if (!project) return;
+      slot.setAttribute("href", project.href);
+      slot.setAttribute("aria-label", "View the " + project.name + " case study");
+
+      var img = document.createElement("img");
+      img.src = project.thumb;
+      img.alt = project.name + " case study thumbnail";
+      img.className = "home-work__tile-image";
+      slot.appendChild(img);
+
+      var hoverImg = document.createElement("img");
+      hoverImg.src = project.thumbHover;
+      hoverImg.alt = "";
+      hoverImg.setAttribute("aria-hidden", "true");
+      hoverImg.className = "home-work__tile-image home-work__tile-image--hover";
+      slot.appendChild(hoverImg);
+
+      var label = document.createElement("h3");
+      label.className = "home-work__tile-label";
+      label.textContent = project.name;
+      slot.appendChild(label);
+    });
+  }
+
   function initWorkTileCursor() {
     var EYE_ICON =
       '<svg class="custom-cursor__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
@@ -442,6 +515,20 @@
     if (!wrap) return;
     wrap.addEventListener("mouseenter", function () { cursorController.setLight(true); });
     wrap.addEventListener("mouseleave", function () { cursorController.setLight(false); });
+  }
+
+  // ---------------------------------------------------------------
+  // AI Rendering collapse/expand toggle
+  // ---------------------------------------------------------------
+  function initRenderingToggle() {
+    var wrap = document.querySelector("[data-rendering-toggle]");
+    if (!wrap) return;
+    var buttons = wrap.querySelectorAll("[data-rendering-toggle-btn]");
+    buttons.forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        wrap.classList.toggle("is-expanded");
+      });
+    });
   }
 
   // ---------------------------------------------------------------
@@ -633,6 +720,28 @@
     if (toggle) toggle.setAttribute("aria-expanded", String(isOpen));
   }
 
+  function accordionGroupRows(scope) {
+    return document.querySelectorAll('.accordion-row[data-accordion-group="' + scope + '"]');
+  }
+
+  function accordionGroupAllOpen(scope) {
+    var scopedRows = accordionGroupRows(scope);
+    return scopedRows.length > 0 && Array.prototype.every.call(scopedRows, function (r) {
+      return r.classList.contains("is-open");
+    });
+  }
+
+  // Groups with a dedicated bottom "Collapse all" link (data-collapse-all)
+  // keep the top link fixed on "Expand all" and only reveal the bottom
+  // link once every row in the group is open. Groups without one (About's
+  // Experience/Education) keep the single link toggling in place.
+  function syncAccordionGroupUI(scope) {
+    var collapseLink = document.querySelector('[data-collapse-all="' + scope + '"]');
+    if (!collapseLink) return;
+    var footer = collapseLink.closest(".workshop-accordion__footer") || collapseLink.parentElement;
+    footer.classList.toggle("is-visible", accordionGroupAllOpen(scope));
+  }
+
   function initAccordions() {
     var rows = document.querySelectorAll(".accordion-row");
     if (!rows.length) return;
@@ -642,22 +751,61 @@
       if (!toggle) return;
       toggle.addEventListener("click", function () {
         setAccordionRowOpen(row, !row.classList.contains("is-open"));
+        var scope = row.getAttribute("data-accordion-group");
+        if (scope) syncAccordionGroupUI(scope);
+      });
+      toggle.addEventListener("mouseenter", function () {
+        cursorController.setHotspot(true);
+        cursorController.setLabel("See more");
+      });
+      toggle.addEventListener("mouseleave", function () {
+        cursorController.setHotspot(false);
+        cursorController.setLabel("");
       });
     });
 
     var expandAllLinks = document.querySelectorAll("[data-expand-all]");
     expandAllLinks.forEach(function (link) {
+      link.addEventListener("mouseenter", function () {
+        cursorController.setHotspot(true);
+        cursorController.setLabel("", PLUS_ICON);
+      });
+      link.addEventListener("mouseleave", function () {
+        cursorController.setHotspot(false);
+        cursorController.setLabel("");
+      });
       link.addEventListener("click", function (e) {
         e.preventDefault();
         var scope = link.getAttribute("data-expand-all");
-        var scopedRows = document.querySelectorAll(
-          '.accordion-row[data-accordion-group="' + scope + '"]'
-        );
-        var allOpen = Array.prototype.every.call(scopedRows, function (r) {
-          return r.classList.contains("is-open");
-        });
-        scopedRows.forEach(function (r) { setAccordionRowOpen(r, !allOpen); });
-        link.textContent = allOpen ? "Expand all" : "Collapse all";
+        var scopedRows = accordionGroupRows(scope);
+        var hasCollapseLink = !!document.querySelector('[data-collapse-all="' + scope + '"]');
+
+        if (hasCollapseLink) {
+          scopedRows.forEach(function (r) { setAccordionRowOpen(r, true); });
+          syncAccordionGroupUI(scope);
+        } else {
+          var allOpen = accordionGroupAllOpen(scope);
+          scopedRows.forEach(function (r) { setAccordionRowOpen(r, !allOpen); });
+          link.textContent = allOpen ? "Expand all" : "Collapse all";
+        }
+      });
+    });
+
+    var collapseAllLinks = document.querySelectorAll("[data-collapse-all]");
+    collapseAllLinks.forEach(function (link) {
+      link.addEventListener("mouseenter", function () {
+        cursorController.setHotspot(true);
+        cursorController.setLabel("", MINUS_ICON);
+      });
+      link.addEventListener("mouseleave", function () {
+        cursorController.setHotspot(false);
+        cursorController.setLabel("");
+      });
+      link.addEventListener("click", function (e) {
+        e.preventDefault();
+        var scope = link.getAttribute("data-collapse-all");
+        accordionGroupRows(scope).forEach(function (r) { setAccordionRowOpen(r, false); });
+        syncAccordionGroupUI(scope);
       });
     });
   }
@@ -810,6 +958,69 @@
   }
 
   // ---------------------------------------------------------------
+  // Before/after comparison slider
+  // ---------------------------------------------------------------
+  function createBeforeAfterSlider(rootEl) {
+    if (!rootEl) return null;
+    var frame = rootEl.querySelector(".before-after__frame");
+    var handle = rootEl.querySelector(".before-after__handle");
+    if (!frame || !handle) return null;
+
+    var dragging = false;
+
+    function setSplit(percent) {
+      percent = Math.max(0, Math.min(100, percent));
+      frame.style.setProperty("--split", percent + "%");
+      handle.setAttribute("aria-valuenow", String(Math.round(percent)));
+    }
+
+    function percentFromClientX(clientX) {
+      var rect = frame.getBoundingClientRect();
+      return ((clientX - rect.left) / rect.width) * 100;
+    }
+
+    function onPointerMove(e) {
+      if (!dragging) return;
+      setSplit(percentFromClientX(e.clientX));
+    }
+
+    function onPointerUp() {
+      dragging = false;
+      window.removeEventListener("pointermove", onPointerMove);
+      window.removeEventListener("pointerup", onPointerUp);
+    }
+
+    handle.addEventListener("pointerdown", function (e) {
+      dragging = true;
+      window.addEventListener("pointermove", onPointerMove);
+      window.addEventListener("pointerup", onPointerUp);
+      e.preventDefault();
+    });
+
+    frame.addEventListener("pointerdown", function (e) {
+      if (e.target === handle || handle.contains(e.target)) return;
+      setSplit(percentFromClientX(e.clientX));
+    });
+
+    handle.addEventListener("keydown", function (e) {
+      var current = parseFloat(frame.style.getPropertyValue("--split")) || 50;
+      if (e.key === "ArrowLeft") { setSplit(current - 5); e.preventDefault(); }
+      else if (e.key === "ArrowRight") { setSplit(current + 5); e.preventDefault(); }
+      else if (e.key === "Home") { setSplit(0); e.preventDefault(); }
+      else if (e.key === "End") { setSplit(100); e.preventDefault(); }
+    });
+
+    setSplit(50);
+    return { setSplit: setSplit };
+  }
+
+  function initBeforeAfterSliders() {
+    document.querySelectorAll("[data-before-after]").forEach(function (el) {
+      createBeforeAfterSlider(el);
+    });
+  }
+
+  // ---------------------------------------------------------------
   // Back to top
   // ---------------------------------------------------------------
   function initBackToTop() {
@@ -821,6 +1032,136 @@
     btn.addEventListener("click", function () {
       window.scrollTo({ top: 0, behavior: "smooth" });
     });
+    btn.addEventListener("mouseenter", function () {
+      cursorController.setHotspot(true);
+      cursorController.setLabel("Top");
+    });
+    btn.addEventListener("mouseleave", function () {
+      cursorController.setHotspot(false);
+      cursorController.setLabel("");
+    });
+  }
+
+  // ---------------------------------------------------------------
+  // Fallback cursor: any other hoverable link/button that doesn't
+  // have its own cursor treatment above still turns into the lime
+  // hotspot pill (no label) so it reads as clickable. Must run last,
+  // after carousel dots and other dynamically-created controls exist.
+  // ---------------------------------------------------------------
+  function initDefaultHoverCursor() {
+    var HANDLED_SELECTOR = [
+      ".site-nav__link",
+      ".site-nav__logo-link",
+      ".project-nav__link",
+      ".project-nav__back",
+      ".home-work__tile--link",
+      ".about-preview__cta",
+      ".delivery-column",
+      ".badge[data-trait]",
+      ".accordion-row__toggle",
+      "[data-expand-all]",
+      ".carousel-arrow--prev",
+      ".carousel-arrow--next",
+      ".back-to-top",
+      ".touchpoint-dot",
+      ".hero__hotspot",
+    ].join(", ");
+
+    document.querySelectorAll("a, button").forEach(function (el) {
+      if (el.matches(HANDLED_SELECTOR)) return;
+      el.addEventListener("mouseenter", function () {
+        cursorController.setHotspot(true);
+      });
+      el.addEventListener("mouseleave", function () {
+        cursorController.setHotspot(false);
+      });
+    });
+  }
+
+  // ---------------------------------------------------------------
+  // Gallery lightbox — click any bento/row image to enlarge, with
+  // prev/next navigation scoped to that image's own .project-gallery
+  // ---------------------------------------------------------------
+  function initGalleryLightbox() {
+    var galleries = document.querySelectorAll(".project-gallery");
+    if (!galleries.length) return;
+
+    var overlay = document.createElement("div");
+    overlay.className = "lightbox";
+    overlay.innerHTML =
+      '<button type="button" class="lightbox__close" aria-label="Close">&times;</button>' +
+      '<button type="button" class="lightbox__arrow lightbox__arrow--prev" aria-label="Previous image">&#8249;</button>' +
+      '<img class="lightbox__image" alt="">' +
+      '<button type="button" class="lightbox__arrow lightbox__arrow--next" aria-label="Next image">&#8250;</button>';
+    document.body.appendChild(overlay);
+
+    var imageEl = overlay.querySelector(".lightbox__image");
+    var closeBtn = overlay.querySelector(".lightbox__close");
+    var prevBtn = overlay.querySelector(".lightbox__arrow--prev");
+    var nextBtn = overlay.querySelector(".lightbox__arrow--next");
+
+    var currentImages = [];
+    var currentIndex = 0;
+
+    function show() {
+      var img = currentImages[currentIndex];
+      imageEl.src = img.currentSrc || img.src;
+      imageEl.alt = img.alt || "";
+    }
+
+    function open(images, index) {
+      currentImages = images;
+      currentIndex = index;
+      show();
+      overlay.classList.add("is-open");
+      document.body.classList.add("lightbox-open");
+    }
+
+    function close() {
+      overlay.classList.remove("is-open");
+      document.body.classList.remove("lightbox-open");
+      imageEl.src = "";
+    }
+
+    function next() {
+      currentIndex = (currentIndex + 1) % currentImages.length;
+      show();
+    }
+
+    function prev() {
+      currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
+      show();
+    }
+
+    closeBtn.addEventListener("click", close);
+    nextBtn.addEventListener("click", next);
+    prevBtn.addEventListener("click", prev);
+    overlay.addEventListener("click", function (e) {
+      if (e.target === overlay) close();
+    });
+    document.addEventListener("keydown", function (e) {
+      if (!overlay.classList.contains("is-open")) return;
+      if (e.key === "Escape") close();
+      else if (e.key === "ArrowRight") next();
+      else if (e.key === "ArrowLeft") prev();
+    });
+
+    galleries.forEach(function (gallery) {
+      var images = Array.prototype.slice.call(gallery.querySelectorAll("img"));
+      images.forEach(function (img, index) {
+        img.addEventListener("click", function () {
+          open(images, index);
+        });
+        img.addEventListener("mouseenter", function () {
+          cursorController.setHotspot(true);
+          cursorController.setLabel("View");
+        });
+        img.addEventListener("mouseleave", function () {
+          cursorController.setHotspot(false);
+          cursorController.setLabel("");
+        });
+      });
+    });
   }
 
   // ---------------------------------------------------------------
@@ -828,6 +1169,7 @@
   // ---------------------------------------------------------------
   document.addEventListener("DOMContentLoaded", function () {
     initCustomCursor();
+    initProjectThumbnails();
     initNavScrollState();
     initHeroParallax();
     initDelightParallax();
@@ -842,12 +1184,16 @@
     initAboutPreviewCursor();
     initWorkTileCursor();
     initRenderingCursor();
+    initRenderingToggle();
     initTooltip();
     initTouchpointTooltips();
     initTraitTooltips();
     initCarousels();
+    initBeforeAfterSliders();
     initBackToTop();
     initHeroHotspotScroll();
     initAccordions();
+    initGalleryLightbox();
+    initDefaultHoverCursor();
   });
 })();

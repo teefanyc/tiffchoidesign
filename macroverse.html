@@ -41,7 +41,7 @@
   <div class="main-content">
 
     <nav class="project-nav" aria-label="Project sections">
-      <a href="#top" class="project-nav__back">
+      <a href="index.html" class="project-nav__back">
         <svg width="16" height="13" viewBox="0 0 16 13" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M1 6.5H15M1 6.5L6.5 1M1 6.5L6.5 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         Back
       </a>
@@ -58,12 +58,16 @@
 
       <!-- ================= OVERVIEW ================= -->
       <section id="overview" class="section">
-        <h2 class="section__heading section__heading--overview">Overview</h2>
+        <div class="overview-eyebrow">
+          <span class="overview-eyebrow__line">Macroverse</span>
+          <span class="overview-eyebrow__line overview-eyebrow__line--muted">Product Design | Capstone</span>
+        </div>
+        <h2 class="overview-lede" data-split-reveal>Inspiring, educating, and impacting the community through engaging science-based programs and exhibits.</h2>
 
-        <div class="meta-grid">
+        <div class="meta-grid meta-grid--3">
           <div class="meta-box">
             <span class="meta-box__label">Roles</span>
-            <p class="meta-box__value">UX Research<br>UI Design</p>
+            <p class="meta-box__value">UX Research<br>UI/UX Design</p>
           </div>
           <div class="meta-box">
             <span class="meta-box__label">Timeline</span>
@@ -73,14 +77,9 @@
             <span class="meta-box__label">Team</span>
             <p class="meta-box__value">Tiffany Choi<br>Isabella Cedric<br>Sujin Kim<br>Zhi Qiu</p>
           </div>
-          <div class="meta-box">
-            <span class="meta-box__label">Tools</span>
-            <p class="meta-box__value">Figma<br>Paper</p>
-          </div>
         </div>
 
         <div class="welcome-block">
-          <h3 class="welcome-block__heading" data-split-reveal>Welcome to the Macroverse!</h3>
           <p class="reveal">Currently in development at the Discovery Cube Museum, the Macroverse will be a seasonal summer exhibit where visitors get &ldquo;shrunken&rdquo; down to the size of a lizard and enter a science lab full of different challenges. With funding from Lilly Grant initiatives backing the exhibit, visitors are challenged to practice four core character traits while inside this immersive, oversized science environment:</p>
 
           <div class="badges">
@@ -91,29 +90,42 @@
           </div>
         </div>
 
-        <figure class="rendering-frame reveal">
+        <figure class="rendering-frame reveal" data-rendering-toggle>
           <div class="rendering-frame__panel">
             <img src="assets/images/wordmark-macroverse.png" alt="Macroverse wordmark" class="rendering-frame__wordmark">
-            <div class="rendering-frame__image-wrap">
-              <img src="assets/images/ai-rendering.png" alt="AI rendering of the Macroverse exhibit floor plan, showing stations including Mouse Maze, Periodic Pursuit, Ant Farm, Lava Lab, Logic Loop, Molecule Match, and a Beckman Lab entrance" class="rendering-frame__image">
 
-              <button class="touchpoint-dot" type="button" data-touchpoint="exhibit-onboarding" style="--dot-x: 88%; --dot-y: 86%;" aria-label="Exhibit Onboarding — view details">
-                <span class="touchpoint-dot__pulse" aria-hidden="true"></span>
-              </button>
-              <button class="touchpoint-dot" type="button" data-touchpoint="game-checkin" style="--dot-x: 50%; --dot-y: 48%;" aria-label="Game Check-in (Lava Lab) — view details">
-                <span class="touchpoint-dot__pulse" aria-hidden="true"></span>
-              </button>
-              <button class="touchpoint-dot" type="button" data-touchpoint="game-checkin" style="--dot-x: 24%; --dot-y: 31%;" aria-label="Game Check-in (Mouse Maze) — view details">
-                <span class="touchpoint-dot__pulse" aria-hidden="true"></span>
-              </button>
-              <button class="touchpoint-dot" type="button" data-touchpoint="game-checkin" style="--dot-x: 22%; --dot-y: 72%;" aria-label="Game Check-in (Logic Loop) — view details">
-                <span class="touchpoint-dot__pulse" aria-hidden="true"></span>
-              </button>
-              <button class="touchpoint-dot" type="button" data-touchpoint="contribution-kiosks" style="--dot-x: 71%; --dot-y: 77%;" aria-label="Contribution Kiosks — view details">
-                <span class="touchpoint-dot__pulse" aria-hidden="true"></span>
+            <button type="button" class="rendering-toggle__cta rendering-toggle__cta--top" data-rendering-toggle-btn>
+              <span>Expand for Exhibition Rendering</span>
+              <svg class="rendering-toggle__caret" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M3 6L7 2.5L11 6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 8L7 11.5L11 8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+
+            <div class="rendering-toggle__panel">
+              <div class="rendering-frame__image-wrap">
+                <img src="assets/images/ai-rendering.png" alt="AI rendering of the Macroverse exhibit floor plan, showing stations including Mouse Maze, Periodic Pursuit, Ant Farm, Lava Lab, Logic Loop, Molecule Match, and a Beckman Lab entrance" class="rendering-frame__image">
+
+                <button class="touchpoint-dot" type="button" data-touchpoint="exhibit-onboarding" style="--dot-x: 88%; --dot-y: 86%;" aria-label="Exhibit Onboarding — view details">
+                  <span class="touchpoint-dot__pulse" aria-hidden="true"></span>
+                </button>
+                <button class="touchpoint-dot" type="button" data-touchpoint="game-checkin" style="--dot-x: 50%; --dot-y: 48%;" aria-label="Game Check-in (Lava Lab) — view details">
+                  <span class="touchpoint-dot__pulse" aria-hidden="true"></span>
+                </button>
+                <button class="touchpoint-dot" type="button" data-touchpoint="game-checkin" style="--dot-x: 24%; --dot-y: 31%;" aria-label="Game Check-in (Mouse Maze) — view details">
+                  <span class="touchpoint-dot__pulse" aria-hidden="true"></span>
+                </button>
+                <button class="touchpoint-dot" type="button" data-touchpoint="game-checkin" style="--dot-x: 22%; --dot-y: 72%;" aria-label="Game Check-in (Logic Loop) — view details">
+                  <span class="touchpoint-dot__pulse" aria-hidden="true"></span>
+                </button>
+                <button class="touchpoint-dot" type="button" data-touchpoint="contribution-kiosks" style="--dot-x: 71%; --dot-y: 77%;" aria-label="Contribution Kiosks — view details">
+                  <span class="touchpoint-dot__pulse" aria-hidden="true"></span>
+                </button>
+              </div>
+              <figcaption class="rendering-frame__caption">AI Rendering courtesy of Discovery Cube</figcaption>
+
+              <button type="button" class="rendering-toggle__cta rendering-toggle__cta--bottom" data-rendering-toggle-btn>
+                <span>Collapse Exhibition Rendering</span>
+                <svg class="rendering-toggle__caret" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M3 6L7 2.5L11 6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 8L7 11.5L11 8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </button>
             </div>
-            <figcaption class="rendering-frame__caption">AI Rendering courtesy of Discovery Cube</figcaption>
           </div>
         </figure>
       </section>
@@ -139,14 +151,165 @@
 
         <div class="carousel" id="discovery-carousel">
           <div class="carousel-track">
-            <div class="carousel-slide"><img src="assets/images/research-activities-1.png" alt="Research activity 1"></div>
-            <div class="carousel-slide"><img src="assets/images/research-activities-2.png" alt="Research activity 2"></div>
-            <div class="carousel-slide"><img src="assets/images/research-activities-3.png" alt="Research activity 3"></div>
-            <div class="carousel-slide"><img src="assets/images/research-activities-4.png" alt="Research activity 4"></div>
+            <div class="carousel-slide carousel-slide--olive">
+              <picture>
+                <source media="(max-width: 767px)" srcset="assets/images/discovery-carousel-activity1-828x828.png">
+                <img src="assets/images/discovery-carousel-activity1-828x351.png" alt="Research activity 1: Contextual Inquiry">
+              </picture>
+            </div>
+            <div class="carousel-slide carousel-slide--blue">
+              <picture>
+                <source media="(max-width: 767px)" srcset="assets/images/discovery-carousel-activity2-828x828.png">
+                <img src="assets/images/discovery-carousel-activity2-828x351.png" alt="Research activity 2: Interviews with Subject Matter Experts">
+              </picture>
+            </div>
+            <div class="carousel-slide carousel-slide--purple">
+              <picture>
+                <source media="(max-width: 767px)" srcset="assets/images/discovery-carousel-activity3-828x828.png">
+                <img src="assets/images/discovery-carousel-activity3-828x351.png" alt="Research activity 3: Affinity Clustering">
+              </picture>
+            </div>
+            <div class="carousel-slide carousel-slide--tan">
+              <picture>
+                <source media="(max-width: 767px)" srcset="assets/images/discovery-carousel-activity4-828x828.png">
+                <img src="assets/images/discovery-carousel-activity4-828x351.png" alt="Research activity 4: Paper Prototyping">
+              </picture>
+            </div>
           </div>
           <button class="carousel-arrow carousel-arrow--prev" type="button" aria-label="Previous slide">&#8249;</button>
           <button class="carousel-arrow carousel-arrow--next" type="button" aria-label="Next slide">&#8250;</button>
           <div class="carousel-dots"></div>
+        </div>
+
+        <div class="sub-block">
+          <h3 class="sub-block__heading reveal">Getting into the mindset - Workshop</h3>
+          <p class="reveal">As we moved into identifying our users&rsquo; needs, I wanted to align everyone on what what this actually meant&mdash;what makes an 8 year old tick? From our youngest team member to our oldest partner, the age difference was over a decade; we were going to need some alignment here.</p>
+          <p class="reveal">I came up with a 3-part Figjam workshop called &ldquo;<strong>Build Your 8 Y.O. Self</strong>,&rdquo; where you could embody a hybrid persona of your core personality and whatever you could remember from when you were 8 years old. The workshop would take place during our weekly team meetings so each part had to fit within a 1-hr time slot.</p>
+
+          <div class="workshop-accordion reveal">
+            <div class="workshop-accordion__header">
+              <span class="workshop-accordion__header-title">Build Your 8 Year Old Self Workshop</span>
+              <a href="#" class="workshop-accordion__expand-all" data-expand-all="workshop">Expand all</a>
+            </div>
+
+            <div class="accordion-row accordion-row--workshop" data-accordion-group="workshop">
+              <button type="button" class="accordion-row__toggle" aria-expanded="false">
+                <span class="accordion-row__heading">
+                  <span class="workshop-accordion__part">Part 1</span>
+                  <span class="accordion-row__title">8 Year Old Self Mood Boards</span>
+                </span>
+                <span class="accordion-row__icon" aria-hidden="true">+</span>
+              </button>
+              <div class="accordion-row__panel">
+                <div class="workshop-media-row">
+                  <img src="assets/images/workshop-moodboard-1.png" alt="8 year old self mood board example 1" class="workshop-media-row__image workshop-media-row__image--framed">
+                  <div class="workshop-media-row__text-col">
+                    <span class="workshop-media-row__duration">3 mins</span>
+                    <p class="workshop-media-row__text">Using the stamp tool, stamp in emojis, shapes, colors, or words that represent your 8 y.o. self.</p>
+                  </div>
+                </div>
+                <div class="workshop-media-row">
+                  <img src="assets/images/workshop-moodboard-2.png" alt="8 year old self mood board example 2" class="workshop-media-row__image workshop-media-row__image--framed">
+                  <div class="workshop-media-row__text-col">
+                    <span class="workshop-media-row__duration">60 secs</span>
+                    <p class="workshop-media-row__text">After presentations, everyone would &ldquo;steal three things&rdquo; from someone else&rsquo;s board. This told us what types of things resonated with each other and also started to surface commonalities.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-row accordion-row--workshop" data-accordion-group="workshop">
+              <button type="button" class="accordion-row__toggle" aria-expanded="false">
+                <span class="accordion-row__heading">
+                  <span class="workshop-accordion__part">Part 2</span>
+                  <span class="accordion-row__title">8 Year Old Self Visual Biographies</span>
+                </span>
+                <span class="accordion-row__icon" aria-hidden="true">+</span>
+              </button>
+              <div class="accordion-row__panel">
+                <div class="workshop-media-row">
+                  <img src="assets/images/workshop-biography-grid.png" alt="8 year old self visual biography worksheet" class="workshop-media-row__image workshop-media-row__image--wide workshop-media-row__image--framed">
+                  <p class="workshop-media-row__text">This next part dove a little deeper into more specific goalposts of our youth.</p>
+                </div>
+                <div class="workshop-media-row workshop-media-row--reverse">
+                  <img src="assets/images/workshop-trash-graphic.png" alt="Illustration of least-favorite-subject sticky notes tossed in a trash can" class="workshop-media-row__image workshop-media-row__image--small">
+                  <p class="workshop-media-row__text">For impact (and for fun), everyone chose their least favorite subjects and tossed them in the trash.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-row accordion-row--workshop" data-accordion-group="workshop">
+              <button type="button" class="accordion-row__toggle" aria-expanded="false">
+                <span class="accordion-row__heading">
+                  <span class="workshop-accordion__part">Part 3</span>
+                  <span class="accordion-row__title">Message to the Macroverse</span>
+                </span>
+                <span class="accordion-row__icon" aria-hidden="true">+</span>
+              </button>
+              <div class="accordion-row__panel">
+                <p class="workshop-message-intro">This final piece of the workshop was meant to bring the activity full circle. After being able to see through the lens of our 8 year old selves, this message delivered to future Macroverse participants was supposed to be reflective of the things that mattered most to us and what we chose to pass on.</p>
+                <div class="sticky-grid">
+                  <div class="sticky-card sticky-card--pink">
+                    <span class="sticky-card__star" aria-hidden="true">&#9733;</span>
+                    <p class="sticky-card__quote">Have fun, learn lots of things, and look for the helpers!</p>
+                    <span class="sticky-card__heart" aria-hidden="true">&#9825;</span>
+                    <span class="sticky-card__author">Tiffany C</span>
+                  </div>
+                  <div class="sticky-card sticky-card--lavender">
+                    <span class="sticky-card__star" aria-hidden="true">&#9733;</span>
+                    <p class="sticky-card__quote">It&rsquo;s so fun! You get to play games with people and meet so many friends!</p>
+                    <span class="sticky-card__heart" aria-hidden="true">&#9825;</span>
+                    <span class="sticky-card__author">Isabella Cedric</span>
+                  </div>
+                  <div class="sticky-card sticky-card--blue">
+                    <p class="sticky-card__quote">Have fun, go crazy!! There&rsquo;s no boundaries to exploring! Wash your hands after!</p>
+                    <span class="sticky-card__heart" aria-hidden="true">&#9825;</span>
+                    <span class="sticky-card__author">Zhi</span>
+                  </div>
+                  <div class="sticky-card sticky-card--mint">
+                    <span class="sticky-card__star" aria-hidden="true">&#9733;</span>
+                    <p class="sticky-card__quote">When you&rsquo;re in there and try EVERYTHING !!! touch everything, tap everything (dont eat anything) (dont lick anything dont be gross), but do what you feel like !!</p>
+                    <span class="sticky-card__heart" aria-hidden="true">&#9825;</span>
+                    <span class="sticky-card__author">Sujin Kim</span>
+                  </div>
+                  <div class="sticky-card sticky-card--green">
+                    <span class="sticky-card__star" aria-hidden="true">&#9733;</span>
+                    <p class="sticky-card__quote">&ldquo;Take chances, make mistakes, and get messy!&rdquo; - Ms. Frizzle</p>
+                    <span class="sticky-card__heart" aria-hidden="true">&#9825;</span>
+                    <span class="sticky-card__badge">+1</span>
+                    <span class="sticky-card__author">Laura Schmidl</span>
+                  </div>
+                  <div class="sticky-card sticky-card--peach">
+                    <span class="sticky-card__star" aria-hidden="true">&#9733;</span>
+                    <p class="sticky-card__quote">You can play as many times as you want and go back and improve your score. You can bring your friends and do it together or by yourself! You will be so good at this!</p>
+                    <span class="sticky-card__heart" aria-hidden="true">&#9825;</span>
+                    <span class="sticky-card__badge">+1</span>
+                    <span class="sticky-card__author">Cindy di Avani</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-row accordion-row--workshop" data-accordion-group="workshop">
+              <button type="button" class="accordion-row__toggle" aria-expanded="false">
+                <span class="accordion-row__heading">
+                  <span class="workshop-accordion__part">Final</span>
+                  <span class="accordion-row__title">View workshop on Figjam</span>
+                </span>
+                <span class="accordion-row__icon" aria-hidden="true">+</span>
+              </button>
+              <div class="accordion-row__panel">
+                <p class="workshop-message-intro">View the workshop results</p>
+                <div class="workshop-figjam-embed">
+                  <iframe src="https://embed.figma.com/board/ihGLyZ4Sy5ivJ23FxeLQzA/Discovery-Cube-Research?node-id=3-1504&embed-host=share" allowfullscreen loading="lazy" title="Discovery Cube Research workshop board on FigJam"></iframe>
+                </div>
+              </div>
+            </div>
+
+            <div class="workshop-accordion__footer">
+              <a href="#" class="workshop-accordion__expand-all" data-collapse-all="workshop">Collapse all</a>
+            </div>
+          </div>
         </div>
 
         <div class="sub-block">
@@ -280,12 +443,12 @@
         <p class="reveal">Since the Macroverse will not be opening at Discovery Cube until Summer of 2027, we wanted to provide a deliverable that was a bit more dynamic than just a bunch of UI screens. With all of the research we gathered to inform our design decisions, we decided to create an &ldquo;interactive design system&rdquo; for our partners. This design system would outline the insights we drew from our data and show our rationale/logic for things like the specific words we chose or the placement of certain components.</p>
         <p class="reveal">There is a lot of time between now and next summer, which means there is plenty of opportunity for change and more unexpected pivots. This guide could act as a foundational starting point that the future designer can use and update as they see appropriate. For further ease of use, we broke the design system into two parts: a visual style guide and an annotated guide. One is more documentation-focused while the other is a more visual representation of our rationale specific to the screens we designed and tested with.</p>
         <div class="card-row card-row--2">
-          <div class="delivery-column reveal">
+          <a href="https://docs.google.com/document/d/1qnnUjOS107k7nQ4IXYFVGOJ4vPjqijeV3llkkrnliC4/edit?usp=sharing" target="_blank" rel="noopener" class="delivery-column reveal">
             <img src="assets/images/delivery-visualstyleguide-thumb.png" alt="Visual Style Guide thumbnail" class="delivery-column__image">
-          </div>
-          <div class="delivery-column reveal">
+          </a>
+          <a href="https://www.figma.com/proto/NEclaSg0MEKAu2BspcnEJ8/Macroverse?node-id=1-454&viewport=1398%2C904%2C0.28&t=D3GpOEDhrxPHJL3k-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=1%3A454&show-proto-sidebar=1&page-id=0%3A1" target="_blank" rel="noopener" class="delivery-column reveal">
             <img src="assets/images/delivery-annotatedguide-thumb.png" alt="Annotated Guide thumbnail" class="delivery-column__image">
-          </div>
+          </a>
         </div>
       </section>
 
@@ -295,19 +458,10 @@
   <section class="more-work">
     <div class="more-work__inner">
       <h2 class="section__heading">More Work</h2>
-      <div class="card-row card-row--4">
-        <div class="more-work__placeholder-box" aria-hidden="true">
-          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 9.5C4 8.12 5.12 7 6.5 7H10.5L12 4.5H20L21.5 7H25.5C26.88 7 28 8.12 28 9.5V24.5C28 25.88 26.88 27 25.5 27H6.5C5.12 27 4 25.88 4 24.5V9.5Z" stroke="white" stroke-width="1.6" stroke-linejoin="round"/><circle cx="16" cy="17" r="5" stroke="white" stroke-width="1.6"/></svg>
-        </div>
-        <div class="more-work__placeholder-box" aria-hidden="true">
-          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 9.5C4 8.12 5.12 7 6.5 7H10.5L12 4.5H20L21.5 7H25.5C26.88 7 28 8.12 28 9.5V24.5C28 25.88 26.88 27 25.5 27H6.5C5.12 27 4 25.88 4 24.5V9.5Z" stroke="white" stroke-width="1.6" stroke-linejoin="round"/><circle cx="16" cy="17" r="5" stroke="white" stroke-width="1.6"/></svg>
-        </div>
-        <div class="more-work__placeholder-box" aria-hidden="true">
-          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 9.5C4 8.12 5.12 7 6.5 7H10.5L12 4.5H20L21.5 7H25.5C26.88 7 28 8.12 28 9.5V24.5C28 25.88 26.88 27 25.5 27H6.5C5.12 27 4 25.88 4 24.5V9.5Z" stroke="white" stroke-width="1.6" stroke-linejoin="round"/><circle cx="16" cy="17" r="5" stroke="white" stroke-width="1.6"/></svg>
-        </div>
-        <div class="more-work__placeholder-box" aria-hidden="true">
-          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 9.5C4 8.12 5.12 7 6.5 7H10.5L12 4.5H20L21.5 7H25.5C26.88 7 28 8.12 28 9.5V24.5C28 25.88 26.88 27 25.5 27H6.5C5.12 27 4 25.88 4 24.5V9.5Z" stroke="white" stroke-width="1.6" stroke-linejoin="round"/><circle cx="16" cy="17" r="5" stroke="white" stroke-width="1.6"/></svg>
-        </div>
+      <div class="card-row card-row--3">
+        <a data-project="costco" class="more-work__placeholder-box"></a>
+        <a data-project="breakfast-republic" class="more-work__placeholder-box"></a>
+        <a data-project="como-ceviche" class="more-work__placeholder-box"></a>
       </div>
     </div>
   </section>
