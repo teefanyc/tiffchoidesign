@@ -712,6 +712,18 @@
   }
 
   // ---------------------------------------------------------------
+  // Elements of Delight tiles -> "under construction" tooltip
+  // ---------------------------------------------------------------
+  function initDelightTileClick() {
+    var tiles = document.querySelectorAll(".delight__tile");
+    tiles.forEach(function (tile) {
+      tile.addEventListener("click", function () {
+        openTooltip(tile, "Sorry, under construction!");
+      });
+    });
+  }
+
+  // ---------------------------------------------------------------
   // About accordion rows (Experience/Education) + "expand all"
   // ---------------------------------------------------------------
   function setAccordionRowOpen(row, isOpen) {
@@ -1043,6 +1055,14 @@
   }
 
   // ---------------------------------------------------------------
+  // Footer copyright year
+  // ---------------------------------------------------------------
+  function initCopyrightYear() {
+    var els = document.querySelectorAll("[data-current-year]");
+    els.forEach(function (el) { el.textContent = new Date().getFullYear(); });
+  }
+
+  // ---------------------------------------------------------------
   // Fallback cursor: any other hoverable link/button that doesn't
   // have its own cursor treatment above still turns into the lime
   // hotspot pill (no label) so it reads as clickable. Must run last,
@@ -1188,12 +1208,14 @@
     initTooltip();
     initTouchpointTooltips();
     initTraitTooltips();
+    initDelightTileClick();
     initCarousels();
     initBeforeAfterSliders();
     initBackToTop();
     initHeroHotspotScroll();
     initAccordions();
     initGalleryLightbox();
+    initCopyrightYear();
     initDefaultHoverCursor();
   });
 })();

@@ -53,10 +53,16 @@
     <div class="delight__inner">
       <h2 class="delight__heading">Elements of Delight</h2>
       <div class="card-row card-row--4">
-        <div class="delight__tile delight__tile--tint" style="--tile-rotate: 7deg;" aria-hidden="true"></div>
-        <div class="delight__tile delight__tile--tint" style="--tile-rotate: -7deg;" aria-hidden="true"></div>
-        <div class="delight__tile delight__tile--tint" style="--tile-rotate: 8deg;" aria-hidden="true"></div>
-        <div class="delight__tile delight__tile--text" style="--tile-rotate: -9deg;">4th project</div>
+        <div class="delight__tile" style="--tile-rotate: 7deg;">
+          <img src="assets/images/delight-tile1.png" alt="Breakfast Republic branding" class="delight__tile-image">
+        </div>
+        <div class="delight__tile" style="--tile-rotate: -7deg;">
+          <img src="assets/images/delight-tile2.png" alt="Menu design" class="delight__tile-image">
+        </div>
+        <div class="delight__tile" style="--tile-rotate: 8deg;">
+          <img src="assets/images/delight-tile3.png" alt="Corner Chicken signage" class="delight__tile-image">
+        </div>
+        <div class="delight__tile delight__tile--text" style="--tile-rotate: -9deg;">Coming Soon</div>
       </div>
     </div>
     <div class="delight__vignette" aria-hidden="true"></div>
@@ -66,7 +72,9 @@
     <div class="about-preview__inner">
       <h2 class="section__heading">About</h2>
       <div class="about-preview__row">
-        <div class="about-preview__image" aria-hidden="true"></div>
+        <div class="about-preview__image">
+          <img src="assets/images/IMG_0633.jpg" alt="Tiffany Choi smiling with her dog" class="about-preview__image-photo">
+        </div>
         <div>
           <p>Tiffany is a branding designer of 13 years turned UI/UX designer. Her experience ranges from agency to corporate settings within a wide array of industries. She has contributed design work to local and national brands, some including, Marriott Hotels, Costco Auto Program, and Breakfast Republic.</p>
           <a href="about.html" class="about-preview__cta">Read more</a>
@@ -83,14 +91,19 @@
     <p class="site-footer__tagline">Meet you at the intersection <br/>of Design &amp; Identity.</p>
   </div>
   <div class="site-footer__bottom">
-    <span class="site-footer__name">tiff choi design</span>
-    <a href="#" class="site-footer__connect">Connect</a>
+    <span class="site-footer__name">&copy; <span data-current-year></span> tiff choi design</span>
+    <a href="https://www.linkedin.com/in/tiffanywchoi" target="_blank" rel="noopener" class="site-footer__connect">Connect</a>
   </div>
 </footer>
 
 <button class="back-to-top" type="button" aria-label="Back to top">
   <img src="assets/icons/arrow-up.svg" alt="" aria-hidden="true">
 </button>
+
+<div class="tooltip" role="tooltip">
+  <p class="tooltip__text"></p>
+  <div class="tooltip__arrow" aria-hidden="true"></div>
+</div>
 
 <script src="script.js" defer></script>
 </body>

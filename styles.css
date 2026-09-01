@@ -971,7 +971,7 @@ p { color: var(--gray-body); font-size: 17px; margin: 0 0 20px; }
 
 .site-footer {
   background: var(--purple-accent);
-  color: var(--white);
+  color: var(--cream);
   padding: 64px;
 }
 
@@ -986,7 +986,7 @@ p { color: var(--gray-body); font-size: 17px; margin: 0 0 20px; }
 .site-footer__tagline {
   font-family: var(--font-heading);
   font-size: 32px;
-  color: var(--white);
+  color: var(--cream);
   max-width: 800px;
   margin: 0 auto;
 }
@@ -1250,7 +1250,7 @@ p { color: var(--gray-body); font-size: 17px; margin: 0 0 20px; }
   width: 100%;
   aspect-ratio: 1 / 1;
   border-radius: 8px;
-  background: var(--gray-body);
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1262,11 +1262,14 @@ p { color: var(--gray-body); font-size: 17px; margin: 0 0 20px; }
   transform: rotate(0deg) scale(1.04);
 }
 
-.delight__tile--tint {
-  background: rgba(188, 115, 205, 0.25);
+.delight__tile-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .delight__tile--text {
+  background: var(--gray-body);
   color: var(--cream);
   font-family: var(--font-body);
   font-weight: 600;
@@ -1298,6 +1301,14 @@ p { color: var(--gray-body); font-size: 17px; margin: 0 0 20px; }
   height: 200px;
   border-radius: 8px;
   background: var(--gray-body);
+  overflow: hidden;
+}
+
+.about-preview__image-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 25%;
 }
 
 .about-preview__cta {
@@ -1319,7 +1330,7 @@ p { color: var(--gray-body); font-size: 17px; margin: 0 0 20px; }
 
 /* ============= ABOUT: INTRO ============= */
 .about-intro {
-  padding: 160px 64px 100px;
+  padding: 220px 64px 100px;
 }
 
 .about-intro__inner {
@@ -1336,6 +1347,14 @@ p { color: var(--gray-body); font-size: 17px; margin: 0 0 20px; }
   height: 276px;
   border-radius: 8px;
   background: var(--gray-body);
+  overflow: hidden;
+}
+
+.about-intro__image-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 25%;
 }
 
 .about-intro__text {
@@ -1411,6 +1430,14 @@ p { color: var(--gray-body); font-size: 17px; margin: 0 0 20px; }
   color: inherit;
 }
 
+.accordion-row__static {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  width: 100%;
+}
+
 .accordion-row__heading {
   display: flex;
   flex-direction: column;
@@ -1459,7 +1486,7 @@ p { color: var(--gray-body); font-size: 17px; margin: 0 0 20px; }
 }
 
 .accordion-row.is-open .accordion-row__panel {
-  max-height: 320px;
+  max-height: 600px;
 }
 
 .accordion-row__panel-text {
@@ -1468,6 +1495,33 @@ p { color: var(--gray-body); font-size: 17px; margin: 0 0 20px; }
   font-style: italic;
   padding-top: 16px;
   margin: 0;
+}
+
+.accordion-row__panel-list {
+  padding-top: 16px;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.accordion-row__panel-list li {
+  position: relative;
+  padding-left: 18px;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--gray-body);
+}
+
+.accordion-row__panel-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.6em;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--gray-body);
 }
 
 /* ============= DISCOVERY: WORKSHOP ACCORDION ============= */
@@ -1811,6 +1865,7 @@ p { color: var(--gray-body); font-size: 17px; margin: 0 0 20px; }
 }
 
 .gallery-row-3--four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.gallery-row-3--two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 
 .gallery-row-3__tile { background: var(--gray-light); border-radius: 8px; overflow: hidden; }
 
@@ -1902,6 +1957,14 @@ body.lightbox-open { overflow: hidden; }
   font-size: 14px;
   color: var(--gray-body);
   margin: 24px 0;
+  overflow: hidden;
+}
+
+.image-placeholder img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 /* ============= PROJECT PAGES: MORE WORK CROSS-LINKS ============= */
