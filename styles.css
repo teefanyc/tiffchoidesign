@@ -272,6 +272,12 @@ body.custom-cursor-enabled * {
   margin: 8px 0 0;
 }
 
+.hero__title .word,
+.hero__subtitle .word,
+.welcome-block__heading .word {
+  display: inline-block;
+}
+
 .hero__title .char,
 .hero__subtitle .char,
 .welcome-block__heading .char {
@@ -565,7 +571,7 @@ p { color: var(--gray-body); font-size: 17px; margin: 0 0 20px; }
 }
 
 .rendering-frame__wordmark {
-  max-width: 320px;
+  max-width: min(320px, 100%);
   margin: 0 auto 24px;
 }
 
@@ -1246,35 +1252,63 @@ p { color: var(--gray-body); font-size: 17px; margin: 0 0 20px; }
   box-shadow: -4px 8px 4px rgba(0, 0, 0, 0.3);
 }
 
-.delight__tile {
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  border-radius: 8px;
-  overflow: hidden;
+.delight-areas {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 56px;
+}
+
+.delight-area {
+  position: relative;
+  aspect-ratio: 400 / 289;
   display: flex;
   align-items: center;
   justify-content: center;
-  transform: rotate(var(--tile-rotate, 0deg));
-  transition: transform 300ms var(--ease-standard);
+  text-decoration: none;
 }
 
-.delight__tile:hover {
-  transform: rotate(0deg) scale(1.04);
-}
-
-.delight__tile-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.delight__tile--text {
-  background: var(--gray-body);
-  color: var(--cream);
-  font-family: var(--font-body);
-  font-weight: 600;
-  font-size: 16px;
+.delight-area__label {
+  display: inline-block;
+  position: relative;
+  z-index: 1;
+  font-family: "brush-up", var(--font-heading);
+  font-weight: 500;
+  font-size: 76px;
+  line-height: 1;
+  color: var(--purple-accent);
   text-align: center;
+  transition: transform 250ms var(--ease-standard);
+}
+
+.delight-area:hover .delight-area__label {
+  transform: scale(1.1);
+}
+
+.delight-area__star {
+  position: absolute;
+  left: var(--area-x);
+  top: var(--area-y);
+  width: var(--area-w);
+  height: var(--area-h);
+  transform-origin: center;
+  pointer-events: none;
+}
+
+.delight-area:hover .delight-area__star {
+  animation: delight-star-twinkle 1800ms ease-in-out 3;
+}
+
+.delight-area:hover .delight-area__star:nth-of-type(2) {
+  animation-delay: 150ms;
+}
+
+@keyframes delight-star-twinkle {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  50% { transform: scale(1.35) rotate(12deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .delight-area:hover .delight-area__star { animation: none; }
 }
 
 /* ============= HOME: ABOUT PREVIEW ============= */
@@ -2051,6 +2085,9 @@ a.more-work__placeholder-box { text-decoration: none; }
 
   .card-row--3,
   .card-row--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+  .delight-areas { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px; }
+  .delight-area__label { font-size: 60px; }
 }
 
 /* ============================================================
@@ -2118,6 +2155,10 @@ a.more-work__placeholder-box { text-decoration: none; }
     grid-template-columns: minmax(0, 1fr);
   }
 
+  .delight-areas { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+  .delight-area { aspect-ratio: 4 / 3; }
+  .delight-area__label { font-size: 48px; }
+
   .badges { gap: 10px; }
   .badge { font-size: 13px; padding: 6px 12px; }
 
@@ -2137,6 +2178,7 @@ a.more-work__placeholder-box { text-decoration: none; }
   .back-to-top { bottom: 20px; right: 20px; }
 
   .about-intro__inner { flex-direction: column; }
+  .about-preview { padding: 56px 20px; }
   .about-preview__row { flex-direction: column; text-align: center; }
 
   .overview-lede { font-size: 28px; margin-bottom: 32px; }
@@ -2174,4 +2216,330 @@ a.more-work__placeholder-box { text-decoration: none; }
 
   .gallery-row-3 { grid-template-columns: minmax(0, 1fr); height: auto; gap: 12px; }
   .gallery-row-3__tile { aspect-ratio: 263 / 300; }
+}
+
+/* ============================================================
+   DELIGHT GALLERY (delight.html) — standalone horizontal-scroll
+   page, separate from index.html's simple .delight__* 4-tile grid.
+   All classes below use the dg- prefix.
+   ============================================================ */
+
+.dg-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 40px;
+  padding: 24px 40px;
+}
+
+.dg-nav__logo-link { display: block; }
+.dg-nav__logo { width: 130px; height: auto; display: block; }
+
+.dg-nav__links { display: flex; gap: 28px; }
+
+.dg-nav__link {
+  position: relative;
+  /* Reserved unconditionally (not just when active) so the sparkle fading
+     in/out never shifts the link's own text. */
+  padding-left: 13px;
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--charcoal);
+  transition: opacity 200ms ease;
+}
+
+.dg-nav__link:hover,
+.dg-nav__link.is-active { opacity: 0.6; }
+
+.dg-nav__sparkle {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+
+.dg-nav__link.is-active .dg-nav__sparkle { opacity: 1; }
+
+.dg-main { background: var(--cream); }
+
+.dg-gallery { position: relative; z-index: 1; }
+
+.dg-gallery__pin { position: static; height: auto; }
+
+.dg-gallery__bg {
+  position: absolute;
+  inset: 0;
+  /* A cream wash layered over a fully-opaque tiled pattern (rather than
+     opacity on the element) reads as the same dimmed 60% look, but avoids
+     a separate rendering bug where opacity + a repeat-tiled background
+     causes the browser to stop compositing the pattern partway down. */
+  background-image:
+    linear-gradient(rgba(250, 248, 237, 0.4), rgba(250, 248, 237, 0.4)),
+    url('assets/images/gridpaper-pattern.jpg');
+  background-repeat: no-repeat, repeat;
+  background-size: cover, 480px auto;
+  pointer-events: none;
+  z-index: 0;
+  will-change: transform;
+}
+
+.dg-gallery__strip { position: relative; z-index: 1; display: flex; flex-direction: column; }
+
+.dg-section {
+  position: relative;
+  padding: 120px 24px 64px;
+  min-height: 480px;
+}
+
+.dg-track {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  margin-bottom: 16px;
+}
+
+.dg-track::-webkit-scrollbar { display: none; }
+
+.dg-thumb {
+  position: relative;
+  flex: 0 0 auto;
+  width: 160px;
+  height: 213px;
+  scroll-snap-align: start;
+  border: none;
+  padding: 0;
+  border-radius: 6px;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.dg-thumb__image { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.dg-thumb__image--hover {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 300ms var(--ease-standard);
+}
+
+.dg-thumb:hover .dg-thumb__image--hover { opacity: 1; }
+
+.dg-section__label {
+  font-family: "brush-up", var(--font-heading);
+  font-weight: 500;
+  font-size: 100px;
+  color: var(--purple-accent);
+  margin: 16px 0 0;
+  line-height: 1;
+  text-align: center;
+}
+
+.dg-star { display: none; }
+
+/* ---- Closing / contact section ---- */
+
+.dg-section--closing { background: var(--purple-accent); }
+
+.dg-closing__heading {
+  font-family: "brush-up", var(--font-heading);
+  font-weight: 500;
+  font-size: 40px;
+  color: var(--cream);
+  margin: 0 0 20px;
+  line-height: 1;
+}
+
+.dg-closing__links {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0 0 32px;
+}
+
+.dg-closing__link,
+.dg-closing__home {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-size: 16px;
+  color: var(--white);
+  text-decoration: none;
+}
+
+.dg-closing__home { font-weight: 600; }
+
+.dg-closing__icon { flex: none; }
+
+/* Desktop-enhanced pin/hijack layout — gated identically to the JS-side
+   supportsGalleryHijack flag, so CSS and JS always agree on which mode
+   is active. */
+@media (hover: hover) and (pointer: fine) and (min-width: 1024px) {
+  .dg-gallery__pin {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+  }
+
+  .dg-gallery__bg {
+    /* --dg-bg-w (set by JS to 100 + (sections - 1) * 40, in measure()) so
+       there's always enough headroom to slide left via transform for the
+       parallax effect (progress * travelDistance * 0.4) without exposing
+       the right edge, however many sections there are — hardcoding a fixed
+       percentage here drifts out of sync the moment a section is added or
+       removed. Positioning via transform (a compositor-only operation, see
+       script.js) rather than animating background-position avoids a
+       rendering bug where updating a repeat-tiled background's position
+       every scroll frame leaves the browser's paint of it incomplete. Only
+       needed here — the mobile fallback below has no parallax to drive.
+       Restating top/bottom/left together with width (rather than only
+       overriding `right`) avoids a render quirk where this sticky pin's
+       flex `align-items: center` mis-centers this element vertically when
+       only some of its inset longhands are set by this rule. */
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: auto;
+    width: var(--dg-bg-w, 180%);
+    will-change: transform;
+  }
+
+  .dg-gallery__strip { flex-direction: row; will-change: transform; }
+
+  .dg-section {
+    /* --dg-vw (set by JS to window.innerWidth) rather than 100vw: on a
+       system where the vertical scrollbar reserves layout space, 100vw and
+       window.innerWidth disagree by the scrollbar's width, which would
+       drift the JS scroll-position math (built on window.innerWidth) out of
+       sync with each section's actual rendered width — worse per section,
+       so deep-links land on the wrong one on some displays/setups. */
+    flex: 0 0 var(--dg-vw, 100vw);
+    height: min(720px, 78vh);
+    min-height: 0;
+    padding: 0;
+  }
+
+  .dg-track {
+    position: absolute;
+    inset: 0;
+    overflow: visible;
+    gap: 0;
+    will-change: transform;
+    /* Track B's full-bleed box paints on top of Track A's (later in the
+       DOM), so without this its empty space blocks clicks/hover from ever
+       reaching Track A's thumbs underneath — only the thumbs themselves
+       (re-enabled below) should be interactive. */
+    pointer-events: none;
+  }
+
+  .dg-thumb {
+    position: absolute;
+    left: var(--dg-x, 10%);
+    top: var(--dg-y, 10%);
+    width: var(--dg-w, 200px);
+    height: var(--dg-h, 267px);
+    flex: none;
+    pointer-events: auto;
+  }
+
+  .dg-section__label {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+    margin: 0;
+    pointer-events: none;
+  }
+
+  .dg-star {
+    display: block;
+    position: absolute;
+    left: var(--dg-x);
+    top: var(--dg-y);
+    pointer-events: none;
+  }
+
+  .dg-closing__content {
+    position: absolute;
+    left: 93px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .dg-closing__home {
+    position: absolute;
+    right: 71px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+
+/* ---- Image popup (click a Logos/Menu Designs/Apparel Design thumb) ---- */
+
+.dg-popup {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(20, 10, 15, 0.9);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 250ms var(--ease-standard);
+}
+
+.dg-popup.is-open { opacity: 1; visibility: visible; }
+
+.dg-popup__image {
+  /* Intrinsic aspect ratio, capped to fit the viewport (same approach as
+     .lightbox__image) — no fixed box or object-fit crop, since the delight
+     gallery's full-size images vary in shape per project. */
+  max-width: min(1104px, 92vw);
+  max-height: 82vh;
+  border-radius: 8px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  display: block;
+}
+
+.dg-popup__close {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  z-index: 2;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--charcoal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  font-size: 24px;
+  line-height: 1;
+}
+
+.dg-popup__close:hover { background: var(--white); opacity: 0.8; }
+
+body.dg-popup-open { overflow: hidden; }
+
+@media (max-width: 767px) {
+  .dg-popup__close { top: 12px; right: 12px; width: 36px; height: 36px; font-size: 20px; }
 }
