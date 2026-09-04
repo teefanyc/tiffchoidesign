@@ -4,9 +4,6 @@
   var NAV_SCROLL_THRESHOLD = 100;
   var REVEAL_MARGIN = "0px 0px -10% 0px";
   var isFinePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
-  var supportsGalleryHijack =
-    window.matchMedia("(hover: hover) and (pointer: fine) and (min-width: 1024px)").matches &&
-    !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   // Single source of truth for each project's thumbnail. Any tile marked
   // with data-project="<key>" (Home's work grid, every case study's "More
@@ -36,35 +33,6 @@
       thumb: "assets/images/work-como-ceviche.jpg",
       thumbHover: "assets/images/work-como-ceviche-hover.jpg",
       name: "¡Como Ceviche!",
-    },
-  };
-
-  // Delight gallery (delight.html) — thumb/full lookup for the zoom viewer.
-  var DELIGHT_PROJECTS = {
-    "bear-repub": {
-      thumb: "assets/images/delight-gallery-bear-repub-thumb.jpg",
-      full: "assets/images/delight-gallery-bear-repub-full.jpg",
-      name: "Bear Republic",
-    },
-    "corner-drafthouse": {
-      thumb: "assets/images/delight-gallery-corner-drafthouse-thumb.jpg",
-      full: "assets/images/delight-gallery-corner-drafthouse-full.jpg",
-      name: "Corner Drafthouse",
-    },
-    npbc: {
-      thumb: "assets/images/delight-gallery-npbc-thumb.jpg",
-      full: "assets/images/delight-gallery-npbc-full.jpg",
-      name: "NPBC",
-    },
-    "pizza-repub": {
-      thumb: "assets/images/delight-gallery-pizza-repub-thumb.jpg",
-      full: "assets/images/delight-gallery-pizza-repub-full.jpg",
-      name: "Pizza Republic",
-    },
-    waterbar: {
-      thumb: "assets/images/delight-gallery-waterbar-thumb.jpg",
-      full: "assets/images/delight-gallery-waterbar-full.jpg",
-      name: "Waterbar",
     },
   };
 
@@ -229,23 +197,12 @@
     var text = el.textContent;
     el.textContent = "";
     var chars = Array.prototype.slice.call(text);
-    var wordEl = null;
     chars.forEach(function (ch, i) {
       var span = document.createElement("span");
       span.className = "char" + (ch === " " ? " char--space" : "");
       span.textContent = ch;
       span.style.animationDelay = baseDelay + i * perCharDelay + "ms";
-      if (ch === " ") {
-        el.appendChild(span);
-        wordEl = null;
-      } else {
-        if (!wordEl) {
-          wordEl = document.createElement("span");
-          wordEl.className = "word";
-          el.appendChild(wordEl);
-        }
-        wordEl.appendChild(span);
-      }
+      el.appendChild(span);
     });
     return chars.length;
   }
@@ -755,6 +712,18 @@
   }
 
   // ---------------------------------------------------------------
+  // Elements of Delight tiles -> "under construction" tooltip
+  // ---------------------------------------------------------------
+  function initDelightTileClick() {
+    var tiles = document.querySelectorAll(".delight__tile");
+    tiles.forEach(function (tile) {
+      tile.addEventListener("click", function () {
+        openTooltip(tile, "Sorry, under construction!");
+      });
+    });
+  }
+
+  // ---------------------------------------------------------------
   // About accordion rows (Experience/Education) + "expand all"
   // ---------------------------------------------------------------
   function setAccordionRowOpen(row, isOpen) {
@@ -1116,9 +1085,6 @@
       ".back-to-top",
       ".touchpoint-dot",
       ".hero__hotspot",
-      ".dg-nav__link",
-      ".dg-nav__logo-link",
-      ".dg-thumb",
     ].join(", ");
 
     document.querySelectorAll("a, button").forEach(function (el) {
@@ -1219,309 +1185,6 @@
   }
 
   // ---------------------------------------------------------------
-  // Delight gallery (delight.html) — pinned/hijacked horizontal scroll
-  // with two parallax tracks per section.
-  // ---------------------------------------------------------------
-  function initDelightGalleryScroll() {
-    var galleryEl = document.querySelector("[data-dg-gallery]");
-    if (!galleryEl || !supportsGalleryHijack) return;
-
-    var spacerEl = galleryEl.querySelector("[data-dg-spacer]");
-    var pinEl = galleryEl.querySelector("[data-dg-pin]");
-    var stripEl = galleryEl.querySelector("[data-dg-strip]");
-    var bgEl = galleryEl.querySelector("[data-dg-bg]");
-    var sections = Array.prototype.slice.call(galleryEl.querySelectorAll("[data-dg-section]"));
-    var tracks = Array.prototype.slice.call(galleryEl.querySelectorAll("[data-dg-track]"));
-    var navLinks = document.querySelectorAll(".dg-nav__link[data-dg-nav]");
-    if (!spacerEl || !stripEl || sections.length < 2) return;
-
-    var travelDistance = 0;
-
-    function measure() {
-      travelDistance = (sections.length - 1) * window.innerWidth;
-      spacerEl.style.height = window.innerHeight + travelDistance + "px";
-    }
-    measure();
-    window.addEventListener("resize", measure);
-
-    function applyProgress(progress) {
-      progress = Math.max(0, Math.min(1, progress));
-
-      stripEl.style.transform = "translateX(" + -progress * travelDistance + "px)";
-
-      if (bgEl) {
-        // transform (not background-position) so repositioning the pattern
-        // is a compositor-only operation — some browsers paint a large
-        // repeat-tiled background incompletely when its background-position
-        // is updated every scroll frame, leaving a gap near one edge. The
-        // element itself is oversized (see .dg-gallery__bg CSS) so sliding it
-        // via transform can never expose a gap at either extreme.
-        bgEl.style.transform = "translateX(" + -progress * travelDistance * 0.4 + "px)";
-      }
-
-      tracks.forEach(function (track) {
-        var speed = parseFloat(track.getAttribute("data-dg-speed")) || 0;
-        track.style.transform = "translateX(" + progress * speed + "px)";
-      });
-
-      var activeIndex = Math.round(progress * (sections.length - 1));
-      navLinks.forEach(function (link, i) {
-        link.classList.toggle("is-active", i === activeIndex);
-      });
-    }
-    applyProgress(0);
-
-    registerScrollHandler(function () {
-      var rect = spacerEl.getBoundingClientRect();
-      var progress = travelDistance > 0 ? -rect.top / travelDistance : 0;
-      applyProgress(progress);
-    });
-
-    function scrollToIndex(index, behavior) {
-      var targetProgress = sections.length > 1 ? index / (sections.length - 1) : 0;
-      var spacerTop = spacerEl.getBoundingClientRect().top + window.scrollY;
-      window.scrollTo({ top: spacerTop + targetProgress * travelDistance, behavior: behavior });
-      // An instant jump (deep-link on load) has no scroll animation to drive
-      // the scroll-event/rAF handler, so apply the matching visual state
-      // synchronously instead of waiting for a scroll event that may not
-      // arrive before the user sees the page. A "smooth" jump (nav click)
-      // skips this — its own scroll events drive the visible glide.
-      if (behavior !== "smooth") {
-        applyProgress(targetProgress);
-        // A large instant jump can leave this sticky pin's children briefly
-        // mis-positioned until the browser settles sticky layout on its own
-        // next pass. Force that settlement (toggle display to force a
-        // reflow) rather than hope it resolves on its own, then re-apply.
-        setTimeout(function () {
-          [pinEl, bgEl, stripEl].forEach(function (el) {
-            if (!el) return;
-            el.style.display = "none";
-            void el.offsetHeight;
-            el.style.display = "";
-          });
-          applyProgress(targetProgress);
-        }, 50);
-      }
-    }
-
-    navLinks.forEach(function (link) {
-      link.addEventListener("click", function (e) {
-        e.preventDefault();
-        scrollToIndex(parseInt(link.getAttribute("data-dg-nav"), 10), "smooth");
-      });
-    });
-
-    // Deep links (e.g. from the Home page's "Elements of Delight" tiles)
-    // land here as delight.html#dg-section-menu-designs. Native anchor
-    // scrolling can't find the right spot since sections are positioned by
-    // JS transform, not document flow, so jump manually once on load.
-    if (window.location.hash) {
-      var targetIndex = sections.findIndex(function (section) {
-        return "#" + section.id === window.location.hash;
-      });
-      if (targetIndex !== -1) {
-        scrollToIndex(targetIndex, "auto");
-      }
-    }
-
-    // Let a horizontal wheel/trackpad gesture also drive the gallery, on top
-    // of native vertical scroll. Forwarding into window.scrollBy keeps a
-    // single source of truth (window.scrollY) driving progress above, and
-    // preventDefault here also blocks the browser's swipe-back/forward
-    // navigation gesture that horizontal input can trigger on a page with
-    // no horizontal overflow.
-    galleryEl.addEventListener(
-      "wheel",
-      function (e) {
-        if (e.deltaX === 0) return;
-        e.preventDefault();
-        window.scrollBy(0, e.deltaX + e.deltaY);
-      },
-      { passive: false }
-    );
-  }
-
-  function initDelightGalleryNavCursor() {
-    var links = document.querySelectorAll(".dg-nav__link");
-    links.forEach(function (link) {
-      link.addEventListener("mouseenter", function () {
-        cursorController.setHotspot(true);
-        cursorController.setLabel("Go to", RIGHT_ARROW_ICON);
-      });
-      link.addEventListener("mouseleave", function () {
-        cursorController.setHotspot(false);
-        cursorController.setLabel("");
-      });
-    });
-
-    var logoLink = document.querySelector(".dg-nav__logo-link");
-    if (logoLink) {
-      logoLink.addEventListener("mouseenter", function () {
-        cursorController.setHotspot(true);
-        cursorController.setLabel("Home", HOME_ICON);
-      });
-      logoLink.addEventListener("mouseleave", function () {
-        cursorController.setHotspot(false);
-        cursorController.setLabel("");
-      });
-    }
-  }
-
-  function initDelightGalleryZoom() {
-    var overlay = document.querySelector("[data-dg-zoom]");
-    if (!overlay) return;
-
-    var stage = overlay.querySelector("[data-dg-zoom-stage]");
-    var imageEl = overlay.querySelector("[data-dg-zoom-image]");
-    var closeBtn = overlay.querySelector("[data-dg-zoom-close]");
-    var zoomInBtn = overlay.querySelector("[data-dg-zoom-in]");
-    var zoomOutBtn = overlay.querySelector("[data-dg-zoom-out]");
-    var thumbs = document.querySelectorAll(".dg-thumb");
-    if (!stage || !imageEl) return;
-
-    var MIN_SCALE = 1;
-    var MAX_SCALE = 3;
-    var STAGE_W = 488;
-    var STAGE_H = 650;
-
-    var scale = 1;
-    var panX = 0;
-    var panY = 0;
-    var activePointers = {};
-    var dragging = false;
-    var lastDragX = 0;
-    var lastDragY = 0;
-    var pinchStartDist = 0;
-    var pinchStartScale = 1;
-
-    function clampPan() {
-      var maxPanX = Math.max(0, (STAGE_W * scale - STAGE_W) / 2);
-      var maxPanY = Math.max(0, (STAGE_H * scale - STAGE_H) / 2);
-      panX = Math.max(-maxPanX, Math.min(maxPanX, panX));
-      panY = Math.max(-maxPanY, Math.min(maxPanY, panY));
-    }
-
-    function render() {
-      clampPan();
-      imageEl.style.transform = "translate(" + panX + "px, " + panY + "px) scale(" + scale + ")";
-      stage.style.cursor = scale > 1 ? "grab" : "default";
-    }
-
-    function setScale(next) {
-      scale = Math.max(MIN_SCALE, Math.min(MAX_SCALE, next));
-      render();
-    }
-
-    function open(project) {
-      var data = DELIGHT_PROJECTS[project];
-      if (!data) return;
-      imageEl.src = data.full;
-      imageEl.alt = data.name;
-      scale = 1;
-      panX = 0;
-      panY = 0;
-      render();
-      overlay.classList.add("is-open");
-      document.body.classList.add("dg-zoom-open");
-    }
-
-    function close() {
-      overlay.classList.remove("is-open");
-      document.body.classList.remove("dg-zoom-open");
-      imageEl.src = "";
-    }
-
-    thumbs.forEach(function (thumb) {
-      thumb.addEventListener("click", function () {
-        open(thumb.getAttribute("data-dg-project"));
-      });
-      thumb.addEventListener("mouseenter", function () {
-        cursorController.setHotspot(true);
-        cursorController.setLabel("View");
-      });
-      thumb.addEventListener("mouseleave", function () {
-        cursorController.setHotspot(false);
-        cursorController.setLabel("");
-      });
-    });
-
-    if (closeBtn) closeBtn.addEventListener("click", close);
-    overlay.addEventListener("click", function (e) {
-      if (e.target === overlay) close();
-    });
-    document.addEventListener("keydown", function (e) {
-      if (!overlay.classList.contains("is-open")) return;
-      if (e.key === "Escape") close();
-    });
-
-    if (zoomInBtn) zoomInBtn.addEventListener("click", function () { setScale(scale + 0.25); });
-    if (zoomOutBtn) zoomOutBtn.addEventListener("click", function () { setScale(scale - 0.25); });
-
-    stage.addEventListener(
-      "wheel",
-      function (e) {
-        e.preventDefault();
-        setScale(scale - e.deltaY * 0.0015);
-      },
-      { passive: false }
-    );
-
-    function pointerDistance() {
-      var pts = Object.keys(activePointers).map(function (id) { return activePointers[id]; });
-      if (pts.length < 2) return 0;
-      var dx = pts[0].x - pts[1].x;
-      var dy = pts[0].y - pts[1].y;
-      return Math.sqrt(dx * dx + dy * dy);
-    }
-
-    stage.addEventListener("pointerdown", function (e) {
-      activePointers[e.pointerId] = { x: e.clientX, y: e.clientY };
-      var count = Object.keys(activePointers).length;
-      if (count === 2) {
-        pinchStartDist = pointerDistance();
-        pinchStartScale = scale;
-        dragging = false;
-      } else if (count === 1 && scale > 1) {
-        dragging = true;
-        lastDragX = e.clientX;
-        lastDragY = e.clientY;
-        stage.classList.add("is-panning");
-      }
-    });
-
-    stage.addEventListener("pointermove", function (e) {
-      if (!(e.pointerId in activePointers)) return;
-      activePointers[e.pointerId] = { x: e.clientX, y: e.clientY };
-      var count = Object.keys(activePointers).length;
-
-      if (count === 2) {
-        var dist = pointerDistance();
-        if (pinchStartDist > 0) setScale(pinchStartScale * (dist / pinchStartDist));
-      } else if (dragging) {
-        panX += e.clientX - lastDragX;
-        panY += e.clientY - lastDragY;
-        lastDragX = e.clientX;
-        lastDragY = e.clientY;
-        render();
-      }
-    });
-
-    function endPointer(e) {
-      delete activePointers[e.pointerId];
-      if (Object.keys(activePointers).length < 2) pinchStartDist = 0;
-      if (Object.keys(activePointers).length === 0) {
-        dragging = false;
-        stage.classList.remove("is-panning");
-      }
-    }
-    stage.addEventListener("pointerup", endPointer);
-    stage.addEventListener("pointercancel", endPointer);
-    stage.addEventListener("pointerleave", function (e) {
-      if (dragging) endPointer(e);
-    });
-  }
-
-  // ---------------------------------------------------------------
   // Bootstrap
   // ---------------------------------------------------------------
   document.addEventListener("DOMContentLoaded", function () {
@@ -1545,15 +1208,13 @@
     initTooltip();
     initTouchpointTooltips();
     initTraitTooltips();
+    initDelightTileClick();
     initCarousels();
     initBeforeAfterSliders();
     initBackToTop();
     initHeroHotspotScroll();
     initAccordions();
     initGalleryLightbox();
-    initDelightGalleryScroll();
-    initDelightGalleryNavCursor();
-    initDelightGalleryZoom();
     initCopyrightYear();
     initDefaultHoverCursor();
   });
